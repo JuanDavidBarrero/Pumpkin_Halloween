@@ -6,20 +6,44 @@
 
 #define NUMPIXELS 3
 
+const int motionSensor = 27;
+
+bool state = false;
+
 Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
 void ColorPumpking(int, int, int, int);
 
+void IRAM_ATTR detectsMovement()
+{
+  state = true;
+}
+
 void setup()
 {
+  Serial.begin(115200);
   pixels.begin();
   pixels.setBrightness(20);
+  ColorPumpking(50, 0, 0, 0);
+  attachInterrupt(digitalPinToInterrupt(motionSensor), detectsMovement, RISING);
 }
 
 void loop()
 {
-  ColorPumpking(5, 255, 50, 0);
+  if (state)
+  {
+    Serial.println("Movimiento detectado");
+    ColorPumpking(5, 255, 50, 0);
+    delay(300);
+    ColorPumpking(5, 200, 0, 0);
+    delay(300);
+    ColorPumpking(5, 0, 215, 0);
+    delay(300);
+    state = false;
+  }
+  ColorPumpking(50, 0, 0, 0);
 }
+
 void ColorPumpking(int times, int red, int green, int blue)
 {
   pixels.clear();
@@ -30,6 +54,6 @@ void ColorPumpking(int times, int red, int green, int blue)
 
     pixels.show();
 
-    delay(5);
+    delay(times);
   }
 }
