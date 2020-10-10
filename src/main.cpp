@@ -4,7 +4,7 @@
 
 #define PIN 12
 
-#define NUMPIXELS 3
+#define NUMPIXELS 15
 
 const int motionSensor = 27;
 
@@ -12,7 +12,7 @@ bool state = false;
 
 Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
-void ColorPumpking(int, int, int, int);
+void ColorPumpking(int);
 
 void IRAM_ATTR detectsMovement()
 {
@@ -24,36 +24,31 @@ void setup()
   Serial.begin(115200);
   pixels.begin();
   pixels.setBrightness(20);
-  ColorPumpking(50, 0, 0, 0);
+  pinMode(motionSensor, INPUT_PULLUP);
   attachInterrupt(digitalPinToInterrupt(motionSensor), detectsMovement, RISING);
 }
 
 void loop()
 {
+
   if (state)
   {
-    Serial.println("Movimiento detectado");
-    ColorPumpking(5, 255, 50, 0);
-    delay(300);
-    ColorPumpking(5, 200, 0, 0);
-    delay(300);
-    ColorPumpking(5, 0, 215, 0);
-    delay(300);
+    ColorPumpking(1);
     state = false;
   }
-  ColorPumpking(50, 0, 0, 0);
+  pixels.clear();
 }
 
-void ColorPumpking(int times, int red, int green, int blue)
+void ColorPumpking(int times)
 {
   pixels.clear();
 
   for (int i = 0; i < NUMPIXELS; i++)
   {
-    pixels.setPixelColor(i, pixels.Color(red, green, blue));
-
-    pixels.show();
+    pixels.setPixelColor(i, pixels.Color(random(0, 255), random(0, 25), random(0, 10)));
 
     delay(times);
   }
+  pixels.show();
 }
+
