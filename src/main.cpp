@@ -71,7 +71,13 @@ void loop()
     Serial.println("Moviemitno detectado");
     myDFPlayer.volume(25);
     myDFPlayer.play(3);
+    digitalWrite(smokemachine, 1);
+    delay(500);
+    digitalWrite(smokemachine, 0);
     ColorPumpking(1);
+    digitalWrite(smokemachine, 1);
+    delay(500);
+    digitalWrite(smokemachine, 0);
     state = false;
   }
   else
@@ -99,7 +105,6 @@ void ColorPumpking(int times)
       delay(times);
     }
     pixels.show();
-    digitalWrite(smokemachine, 1);
     delay(500);
   }
 }
