@@ -10,6 +10,7 @@ DFRobotDFPlayerMini myDFPlayer;
 #define NUMPIXELS 15
 
 const int motionSensor = 15;
+const int smokemachine = 0;
 
 bool state = false;
 
@@ -26,6 +27,9 @@ void setup()
 {
   mySoftwareSerial.begin(9600, SERIAL_8N1, 16, 17); // speed, type, RX, TX
   Serial.begin(115200);
+
+  pinMode(smokemachine, OUTPUT);
+  digitalWrite(smokemachine, 0);
 
   pixels.begin();
   pixels.setBrightness(100);
@@ -78,6 +82,7 @@ void loop()
       delay(5);
     }
     pixels.show();
+    digitalWrite(smokemachine, 0);
   }
 }
 
@@ -94,6 +99,7 @@ void ColorPumpking(int times)
       delay(times);
     }
     pixels.show();
+    digitalWrite(smokemachine, 1);
     delay(500);
   }
 }
