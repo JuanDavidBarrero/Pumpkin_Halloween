@@ -16,7 +16,7 @@ bool state = false;
 
 Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
-void ColorPumpking(int);
+void ColorPumpkin(int);
 
 void IRAM_ATTR detectsMovement()
 {
@@ -74,7 +74,7 @@ void loop()
     digitalWrite(smokemachine, 1);
     delay(500);
     digitalWrite(smokemachine, 0);
-    ColorPumpking(1);
+    ColorPumpkin(1);
     digitalWrite(smokemachine, 1);
     delay(500);
     digitalWrite(smokemachine, 0);
@@ -92,7 +92,7 @@ void loop()
   }
 }
 
-void ColorPumpking(int times)
+void ColorPumpkin(int times)
 {
   pixels.clear();
 
